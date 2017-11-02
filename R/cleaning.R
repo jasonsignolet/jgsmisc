@@ -14,6 +14,7 @@
 #' name_cleaner(raw_names)
 #' # [1] "a_1" "a_2" "a_3"
 #'
+#'
 name_cleaner <- function(old) {
   require(magrittr)
 
