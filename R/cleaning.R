@@ -1,8 +1,8 @@
-#' Column renamer
+#' Name cleaner
 #'
 #' Strip out the punctuation and white space from imported colnames so they can be
 #'   tab autocompleted more easily
-#' @param x Character vector of column names or data.frame/data.table object
+#' @param old Character vector of column names or data.frame/data.table object
 #' @return The same names as input, but lowercase with underscores instead of
 #'   spaces (multiple spaces are reduced to single)
 #' @examples
@@ -14,12 +14,14 @@
 #' name_cleaner(raw_names)
 #' # [1] "a_1" "a_2" "a_3"
 #'
-name_cleaner <- function(x) {
+name_cleaner <- function(old) {
   require(magrittr)
 
-  if (!is.vector(x)) {
-    if (is.data.frame(x)) {
-      x <- colnames(x)
+  if (is.vector(old)) {
+    x <- old
+  } else {
+    if (is.data.frame(old)) {
+      x <- colnames(old)
       message("Detected data.frame input")
     } else {
       stop("Expecting a character vector or data.frame")
@@ -58,6 +60,11 @@ name_cleaner <- function(x) {
     }
 
     clean_names <- name_dt[order(idx), new_name]
+  }
+
+
+  if (is.data.table(old)) {
+    setnames(old, clean_names)
   }
 
   return(clean_names)
