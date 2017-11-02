@@ -1,0 +1,2 @@
+# jgsmisc
+Miscellaneous helper functions
